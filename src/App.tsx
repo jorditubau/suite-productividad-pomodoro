@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Timer, CheckSquare, BarChart2, Settings } from 'lucide-react';
+import { Timer, CheckSquare, Settings } from 'lucide-react';
 import { TomatoIcon } from './components/ui/TomatoIcon';
 import { TimerTab } from './components/timer/TimerTab';
 import { TasksTab } from './components/tasks/TasksTab';
-import { StatsTab } from './components/stats/StatsTab';
 import { SettingsTab } from './components/settings/SettingsTab';
 import { useSettingsStore } from './store/settingsStore';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
@@ -15,7 +14,6 @@ import type { Tab } from './types';
 const tabs: { id: Tab; label: string; Icon: typeof Timer }[] = [
   { id: 'timer', label: 'Timer', Icon: Timer },
   { id: 'tasks', label: 'Tasks', Icon: CheckSquare },
-  { id: 'stats', label: 'Stats', Icon: BarChart2 },
   { id: 'settings', label: 'Settings', Icon: Settings },
 ];
 
@@ -59,10 +57,8 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col">
-      {/* Confetti container */}
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-[9999]" />
 
-      {/* Header */}
       <header className="flex items-center justify-between px-4 pt-4 pb-2 shrink-0">
         <div className="flex items-center gap-2">
           <TomatoIcon size={24} color={accent.ring} />
@@ -76,17 +72,14 @@ export default function App() {
         )}
       </header>
 
-      {/* Content */}
       <main className="flex-1 overflow-y-auto px-4 pb-20">
         {activeTab === 'timer' && (
           <TimerTab onGoToTasks={() => setActiveTab('tasks')} onTabChange={handleTabChange} />
         )}
         {activeTab === 'tasks' && <TasksTab accentColor={accent.ring} />}
-        {activeTab === 'stats' && <StatsTab accentColor={accent.ring} />}
         {activeTab === 'settings' && <SettingsTab accentColor={accent.ring} />}
       </main>
 
-      {/* Bottom Navigation */}
       <nav className="fixed bottom-0 left-0 right-0 bg-gray-950/95 backdrop-blur-md border-t border-white/5 px-2 py-2 flex">
         {tabs.map(({ id, label, Icon }) => {
           const isActive = activeTab === id;

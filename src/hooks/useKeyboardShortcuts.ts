@@ -11,7 +11,6 @@ export function useKeyboardShortcuts({ onPlayPause, onReset, onTabChange }: Opti
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
-      // Don't fire shortcuts in inputs
       if (target.tagName === 'INPUT' || target.tagName === 'TEXTAREA' || target.isContentEditable) return;
 
       switch (e.key) {
@@ -26,10 +25,6 @@ export function useKeyboardShortcuts({ onPlayPause, onReset, onTabChange }: Opti
         case 't':
         case 'T':
           onTabChange('tasks');
-          break;
-        case 's':
-        case 'S':
-          onTabChange('stats');
           break;
       }
     };

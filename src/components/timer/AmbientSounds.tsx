@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Volume2, VolumeX, CloudRain, Coffee, TreePine, Waves } from 'lucide-react';
+import { Volume2, VolumeX, CloudRain, TreePine, Waves } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { Slider } from '../ui/Slider';
 import { useTimerStore } from '../../store/timerStore';
@@ -7,7 +7,6 @@ import { useSettingsStore } from '../../store/settingsStore';
 
 const AMBIENT_OPTIONS: { id: string; label: string; Icon: LucideIcon }[] = [
   { id: 'rain', label: 'Rain', Icon: CloudRain },
-  { id: 'coffee', label: 'Café', Icon: Coffee },
   { id: 'forest', label: 'Forest', Icon: TreePine },
   { id: 'ocean', label: 'Ocean', Icon: Waves },
 ];
@@ -332,87 +331,6 @@ class AmbientGenerator {
         osc.stop(t + chirpDuration + 0.02);
       }
     } catch { /* ignore */ }
-  }
-
-  // ── Café ────────────────────────────────────────────────────────────────────
-  // Brown noise base + formant filters for speech presence + subtle activity
-  private buildCafe() {
-    const ctx = this.ctx!;
-    const out = this.master!;
-
-    // Layer 1 — brown noise base (room ambiance, warmth)
-    const brownBuf = makeBrownBuffer(ctx, 14);
-    const room = loopSource(ctx, brownBuf);
-    const roomLp = ctx.createBiquadFilter();
-    roomLp.type = 'lowpass';
-    roomLp.frequency.value = 900;
-    const roomGain = ctx.createGain();
-    roomGain.gain.value = 0.4;
-    room.connect(roomLp);
-    roomLp.connect(roomGain);
-    roomGain.connect(out);
-    room.start();
-    this.sources.push(room);
-
-    // Layer 2 — pink noise mid (general chatter texture)
-    const pinkBuf = makePinkBuffer(ctx, 16);
-    const chatter = loopSource(ctx, pinkBuf);
-    // Formant 1 — vowel-like resonance ~500Hz
-    const f1 = ctx.createBiquadFilter();
-    f1.type = 'peaking';
-    f1.frequency.value = 500;
-    f1.gain.value = 6;
-    f1.Q.value = 2;
-    // Formant 2 — ~1200Hz
-    const f2 = ctx.createBiquadFilter();
-    f2.type = 'peaking';
-    f2.frequency.value = 1200;
-    f2.gain.value = 4;
-    f2.Q.value = 2.5;
-    const chatterGain = ctx.createGain();
-    chatterGain.gain.value = 0.18;
-    chatter.connect(f1);
-    f1.connect(f2);
-    f2.connect(chatterGain);
-    chatterGain.connect(out);
-    chatter.start();
-    this.sources.push(chatter);
-
-    // Layer 3 — high hiss (espresso machine, cups, cutlery)
-    const whiteBuf = makeWhiteBuffer(ctx, 10);
-    const hiss = loopSource(ctx, whiteBuf);
-    const hissHp = ctx.createBiquadFilter();
-    hissHp.type = 'highpass';
-    hissHp.frequency.value = 4000;
-    const hissGain = ctx.createGain();
-    hissGain.gain.value = 0.08;
-    hiss.connect(hissHp);
-    hissHp.connect(hissGain);
-    hissGain.connect(out);
-    hiss.start();
-    this.sources.push(hiss);
-
-    // Slow activity LFO — simulates waves of conversation (0.03 Hz)
-    const lfo = ctx.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 0.03;
-    const lfoAmt = ctx.createGain();
-    lfoAmt.gain.value = 0.08;
-    lfo.connect(lfoAmt);
-    lfoAmt.connect(chatterGain.gain);
-    lfo.start();
-    this.sources.push(lfo);
-
-    // Secondary irregular LFO (0.07 Hz, offset texture)
-    const lfo2 = ctx.createOscillator();
-    lfo2.type = 'sine';
-    lfo2.frequency.value = 0.07;
-    const lfo2Amt = ctx.createGain();
-    lfo2Amt.gain.value = 0.05;
-    lfo2.connect(lfo2Amt);
-    lfo2Amt.connect(roomGain.gain);
-    lfo2.start();
-    this.sources.push(lfo2);
   }
 
   setVolume(v: number) {

@@ -1,11 +1,10 @@
 export type TimerMode = 'focus' | 'shortBreak' | 'longBreak';
-export type Tab = 'timer' | 'tasks' | 'stats' | 'settings';
+export type Tab = 'timer' | 'tasks' | 'settings';
 export type Priority = 'low' | 'medium' | 'high';
 export type TaskGroup = 'today' | 'week' | 'someday';
 export type Theme = 'dark' | 'light' | 'system';
 export type AccentColor = 'tomato' | 'ocean' | 'forest' | 'purple' | 'amber';
 export type TimerSound = 'chime' | 'bell' | 'digital' | 'none';
-export type AmbientSound = 'rain' | 'coffee' | 'forest' | 'ocean' | 'none';
 
 export interface Task {
   id: string;
@@ -19,23 +18,8 @@ export interface Task {
   createdAt: number;
 }
 
-export interface Session {
-  id: string;
-  taskId?: string;
-  taskTitle?: string;
-  duration: number; // seconds
-  mode: TimerMode;
-  completedAt: number;
-}
-
-export interface DayStats {
-  date: string; // YYYY-MM-DD
-  pomodoros: number;
-  focusMinutes: number;
-}
-
 export interface TimerSettings {
-  focusDuration: number;   // minutes
+  focusDuration: number;
   shortBreakDuration: number;
   longBreakDuration: number;
   longBreakInterval: number;

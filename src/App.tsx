@@ -43,7 +43,7 @@ export default function App() {
   useKeyboardShortcuts({ onPlayPause: togglePlay, onReset: reset });
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white flex flex-col">
+    <div className="h-screen bg-gray-950 text-white flex flex-col overflow-hidden">
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-[9999]" />
 
       {/* ── Header ─────────────────────────────────────────────────────────── */}
@@ -89,20 +89,20 @@ export default function App() {
       {/* ── Main content ───────────────────────────────────────────────────── */}
       {showSettings ? (
         /* Settings — full width */
-        <main className="flex-1 overflow-y-auto px-5 max-w-lg mx-auto w-full">
+        <main className="flex-1 min-h-0 overflow-y-auto px-5 max-w-lg mx-auto w-full">
           <SettingsTab accentColor={accent.ring} />
         </main>
       ) : (
         /* Main dashboard — two columns */
-        <main className="flex-1 overflow-hidden flex flex-col lg:flex-row gap-0">
+        <main className="flex-1 min-h-0 flex flex-col lg:flex-row gap-0">
 
           {/* Left — Timer */}
-          <section className="lg:w-[420px] lg:shrink-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-white/5 px-5">
+          <section className="lg:w-[420px] lg:shrink-0 min-h-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-white/5 px-5">
             <TimerPanel />
           </section>
 
           {/* Right — Tasks */}
-          <section className="flex-1 overflow-y-auto px-5 py-4">
+          <section className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
             <TasksTab accentColor={accent.ring} />
           </section>
 

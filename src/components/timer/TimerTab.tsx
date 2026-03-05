@@ -8,19 +8,12 @@ import { ModeSelector } from './ModeSelector';
 import { AmbientSounds } from './AmbientSounds';
 import { CurrentTask } from './CurrentTask';
 import { getAccentColor } from '../../utils/colors';
-import type { Tab } from '../../types';
 
-interface Props {
-  onGoToTasks: () => void;
-  onTabChange: (tab: Tab) => void;
-}
-
-export function TimerTab({ onGoToTasks }: Props) {
+export function TimerPanel() {
   const timer = useTimerStore();
   const { appSettings, timerSettings } = useSettingsStore();
   const { togglePlay, reset, skip, switchMode } = useTimer();
   const accent = getAccentColor(appSettings.accentColor);
-  const pomodorosInCycle = ((timer.pomodoroCount) % timerSettings.longBreakInterval) + (timer.isRunning && timer.mode === 'focus' ? 0 : 0);
   const sessionInCycle = (timer.pomodoroCount % timerSettings.longBreakInterval) + 1;
 
   if (timer.dnMode) {
@@ -50,7 +43,7 @@ export function TimerTab({ onGoToTasks }: Props) {
   }
 
   return (
-    <div className="flex flex-col items-center gap-6 py-6 max-w-sm mx-auto">
+    <div className="flex flex-col items-center gap-5 py-6 w-full">
       <ModeSelector mode={timer.mode} onSelect={switchMode} accentColor={accent.ring} />
 
       <div className="relative">
@@ -69,10 +62,10 @@ export function TimerTab({ onGoToTasks }: Props) {
         </button>
       </div>
 
-      <div className="text-sm text-gray-500 font-medium">
+      <div className="text-sm text-gray-500 font-medium text-center">
         Session {Math.min(sessionInCycle, timerSettings.longBreakInterval)} of {timerSettings.longBreakInterval}
         {' · '}
-        <span className="text-gray-400">{timer.pomodoroCount} total today</span>
+        <span className="text-gray-400">{timer.pomodoroCount} today</span>
       </div>
 
       <TimerControls
@@ -83,7 +76,7 @@ export function TimerTab({ onGoToTasks }: Props) {
         accentColor={accent.ring}
       />
 
-      <CurrentTask onGoToTasks={onGoToTasks} />
+      <CurrentTask />
 
       <div className="w-full">
         <AmbientSounds accentColor={accent.ring} />

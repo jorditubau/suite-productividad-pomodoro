@@ -1,5 +1,4 @@
 export type TimerMode = 'focus' | 'shortBreak' | 'longBreak';
-export type Tab = 'timer' | 'tasks' | 'settings';
 export type Priority = 'low' | 'medium' | 'high';
 export type TaskGroup = 'today' | 'week' | 'someday';
 export type Theme = 'dark' | 'light' | 'system';

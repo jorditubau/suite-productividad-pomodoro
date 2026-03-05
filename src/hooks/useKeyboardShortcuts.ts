@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
-import type { Tab } from '../types';
 
 interface Options {
   onPlayPause: () => void;
   onReset: () => void;
-  onTabChange: (tab: Tab) => void;
 }
 
-export function useKeyboardShortcuts({ onPlayPause, onReset, onTabChange }: Options) {
+export function useKeyboardShortcuts({ onPlayPause, onReset }: Options) {
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
       const target = e.target as HTMLElement;
@@ -22,14 +20,10 @@ export function useKeyboardShortcuts({ onPlayPause, onReset, onTabChange }: Opti
         case 'R':
           onReset();
           break;
-        case 't':
-        case 'T':
-          onTabChange('tasks');
-          break;
       }
     };
 
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
-  }, [onPlayPause, onReset, onTabChange]);
+  }, [onPlayPause, onReset]);
 }

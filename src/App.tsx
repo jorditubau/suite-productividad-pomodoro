@@ -1,7 +1,7 @@
 import { useState, useCallback, useEffect } from 'react';
-import { Timer, CheckSquare, Settings } from 'lucide-react';
+import { Settings, ArrowLeft } from 'lucide-react';
 import { TomatoIcon } from './components/ui/TomatoIcon';
-import { TimerTab } from './components/timer/TimerTab';
+import { TimerPanel } from './components/timer/TimerTab';
 import { TasksTab } from './components/tasks/TasksTab';
 import { SettingsTab } from './components/settings/SettingsTab';
 import { useSettingsStore } from './store/settingsStore';
@@ -9,13 +9,6 @@ import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useTimerStore } from './store/timerStore';
 import { useTimer } from './hooks/useTimer';
 import { getAccentColor } from './utils/colors';
-import type { Tab } from './types';
-
-const tabs: { id: Tab; label: string; Icon: typeof Timer }[] = [
-  { id: 'timer', label: 'Timer', Icon: Timer },
-  { id: 'tasks', label: 'Tasks', Icon: CheckSquare },
-  { id: 'settings', label: 'Settings', Icon: Settings },
-];
 
 function useTheme() {
   const { appSettings } = useSettingsStore();
@@ -39,7 +32,7 @@ function useTheme() {
 }
 
 export default function App() {
-  const [activeTab, setActiveTab] = useState<Tab>('timer');
+  const [showSettings, setShowSettings] = useState(false);
   const { appSettings } = useSettingsStore();
   const timerState = useTimerStore();
   const { togglePlay, reset } = useTimer();
@@ -47,60 +40,74 @@ export default function App() {
 
   useTheme();
 
-  const handleTabChange = useCallback((tab: Tab) => setActiveTab(tab), []);
-
-  useKeyboardShortcuts({
-    onPlayPause: togglePlay,
-    onReset: reset,
-    onTabChange: handleTabChange,
-  });
+  useKeyboardShortcuts({ onPlayPause: togglePlay, onReset: reset });
 
   return (
     <div className="min-h-screen bg-gray-950 text-white flex flex-col">
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-[9999]" />
 
-      <header className="flex items-center justify-between px-4 pt-4 pb-2 shrink-0">
+      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      <header className="flex items-center justify-between px-5 pt-4 pb-3 shrink-0 border-b border-white/5">
         <div className="flex items-center gap-2">
-          <TomatoIcon size={24} color={accent.ring} />
-          <span className="font-bold text-lg tracking-tight">FocusFlow</span>
+          {showSettings ? (
+            <button
+              onClick={() => setShowSettings(false)}
+              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors"
+            >
+              <ArrowLeft size={18} />
+              <span className="font-medium text-sm">Back</span>
+            </button>
+          ) : (
+            <>
+              <TomatoIcon size={22} color={accent.ring} />
+              <span className="font-bold text-lg tracking-tight">FocusFlow</span>
+            </>
+          )}
         </div>
-        {timerState.isRunning && (
-          <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-white/10">
-            <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: accent.ring }} />
-            Running
-          </div>
-        )}
+
+        <div className="flex items-center gap-3">
+          {!showSettings && timerState.isRunning && (
+            <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-white/10">
+              <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: accent.ring }} />
+              Running
+            </div>
+          )}
+          {showSettings ? (
+            <h1 className="font-semibold text-white">Settings</h1>
+          ) : (
+            <button
+              onClick={() => setShowSettings(true)}
+              className="w-9 h-9 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all"
+              title="Settings"
+            >
+              <Settings size={17} />
+            </button>
+          )}
+        </div>
       </header>
 
-      <main className="flex-1 overflow-y-auto px-4 pb-20">
-        {activeTab === 'timer' && (
-          <TimerTab onGoToTasks={() => setActiveTab('tasks')} onTabChange={handleTabChange} />
-        )}
-        {activeTab === 'tasks' && <TasksTab accentColor={accent.ring} />}
-        {activeTab === 'settings' && <SettingsTab accentColor={accent.ring} />}
-      </main>
+      {/* ── Main content ───────────────────────────────────────────────────── */}
+      {showSettings ? (
+        /* Settings — full width */
+        <main className="flex-1 overflow-y-auto px-5 max-w-lg mx-auto w-full">
+          <SettingsTab accentColor={accent.ring} />
+        </main>
+      ) : (
+        /* Main dashboard — two columns */
+        <main className="flex-1 overflow-hidden flex flex-col lg:flex-row gap-0">
 
-      <nav className="fixed bottom-0 left-0 right-0 bg-gray-950/95 backdrop-blur-md border-t border-white/5 px-2 py-2 flex">
-        {tabs.map(({ id, label, Icon }) => {
-          const isActive = activeTab === id;
-          return (
-            <button
-              key={id}
-              onClick={() => setActiveTab(id)}
-              className={`flex-1 flex flex-col items-center gap-1 py-1.5 rounded-xl transition-all duration-200 ${
-                isActive ? 'text-white' : 'text-gray-600 hover:text-gray-400'
-              }`}
-            >
-              <Icon
-                size={20}
-                strokeWidth={isActive ? 2.5 : 1.8}
-                style={isActive ? { color: accent.ring } : {}}
-              />
-              <span className="text-xs font-medium">{label}</span>
-            </button>
-          );
-        })}
-      </nav>
+          {/* Left — Timer */}
+          <section className="lg:w-[420px] lg:shrink-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-white/5 px-5">
+            <TimerPanel />
+          </section>
+
+          {/* Right — Tasks */}
+          <section className="flex-1 overflow-y-auto px-5 py-4">
+            <TasksTab accentColor={accent.ring} />
+          </section>
+
+        </main>
+      )}
     </div>
   );
 }

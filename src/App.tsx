@@ -94,18 +94,18 @@ export default function App() {
         </main>
       ) : (
         /* Main dashboard — two floating cards */
-        <main className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-8 py-8">
+        <main className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-8 pb-12 pt-4">
           <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
 
             {/* Left — Timer */}
-            <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+            <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)]">
                 <TimerPanel />
               </div>
             </div>
 
             {/* Right — Tasks */}
-            <div className="flex-1 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.5)]">
+            <div className="flex-1 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)] px-6 py-5">
                 <TasksTab accentColor={accent.ring} />
               </div>

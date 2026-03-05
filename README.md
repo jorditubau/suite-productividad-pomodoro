@@ -1,10 +1,10 @@
-# 🍅 FocusFlow — Productivity Suite
+# FocusFlow — Productivity Suite
 
 A fully client-side productivity suite featuring a Pomodoro timer, task manager, and session statistics. No backend, no API keys required — all data persists in `localStorage`.
 
-## ✨ Features
+## Features
 
-### ⏱ Pomodoro Timer
+### Pomodoro Timer
 - Animated SVG circular progress ring
 - Three modes: Focus (25 min), Short Break (5 min), Long Break (15 min)
 - Auto-switch between modes after each session
@@ -13,15 +13,15 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 - Browser tab title updates live with remaining time
 - Desktop notifications on session end
 
-### ✅ Task Manager
+### Task Manager
 - Add tasks with estimated pomodoros, priority (Low/Medium/High), and group
 - Drag-and-drop reorder with `@dnd-kit`
 - Task groups: Today, This Week, Someday
 - Link a task to the active timer session
-- Confetti animation on task completion ✨
+- Confetti animation on task completion 
 - Completed tasks section with clear option
 
-### 📊 Statistics Dashboard
+### Statistics Dashboard
 - Daily overview: focus time, pomodoros, streak, tasks completed
 - Bar chart: pomodoros per day (last 7 days)
 - Line chart: focus hours per day (last 4 weeks)
@@ -29,7 +29,7 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 - GitHub-style activity heatmap (last 3 months)
 - Session log with timestamps
 
-### ⚙️ Settings
+### Settings
 - Timer duration sliders (Focus / Short Break / Long Break)
 - Auto-start breaks & focus toggles
 - Theme: Dark / Light / System
@@ -39,7 +39,7 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 - Export / Import data as JSON
 - Reset all data
 
-## 🔑 Keyboard Shortcuts
+## Keyboard Shortcuts
 
 | Key | Action |
 |-----|--------|
@@ -48,7 +48,7 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 | `T` | Go to Tasks tab |
 | `S` | Go to Stats tab |
 
-## 🛠 Tech Stack
+## Tech Stack
 
 | Tool | Purpose |
 |------|---------|
@@ -61,7 +61,7 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 | Lucide React | Icons |
 | Web Audio API | Timer sounds & ambient noise generation |
 
-## 🚀 Getting Started
+## Getting Started
 
 ```bash
 # Install dependencies
@@ -74,24 +74,5 @@ npm run dev
 npm run build
 ```
 
-Open [http://localhost:5173](http://localhost:5173) in your browser.
+Open: http://127.0.0.1:5174
 
-## 📁 Project Structure
-
-```
-src/
-├── components/
-│   ├── timer/       # TimerRing, Controls, ModeSelector, AmbientSounds, CurrentTask
-│   ├── tasks/       # TaskInput, TaskCard, TaskList, TaskGroup
-│   ├── stats/       # OverviewCards, Charts, HeatmapCalendar, SessionLog
-│   ├── settings/    # Timer, Appearance, Sound, Data settings
-│   └── ui/          # ProgressRing, Badge, Modal, ConfirmDialog, Slider, TomatoIcon
-├── store/           # timerStore, taskStore, statsStore, settingsStore (Zustand)
-├── hooks/           # useTimer, useNotifications, useKeyboardShortcuts, useConfetti
-├── utils/           # timeFormat, localStorage, dataExport, colors
-└── types/           # TypeScript types
-```
-
-## 📄 License
-
-MIT

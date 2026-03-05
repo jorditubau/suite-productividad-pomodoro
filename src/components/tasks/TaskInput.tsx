@@ -1,28 +1,22 @@
 import { useState, FormEvent } from 'react';
 import { Plus } from 'lucide-react';
 import { TomatoIcon } from '../ui/TomatoIcon';
-import type { Priority, TaskGroup } from '../../types';
+import type { Priority } from '../../types';
 import { useTaskStore } from '../../store/taskStore';
 
 const priorities: Priority[] = ['low', 'medium', 'high'];
-const groups: { value: TaskGroup; label: string }[] = [
-  { value: 'today', label: 'Today' },
-  { value: 'week', label: 'This Week' },
-  { value: 'someday', label: 'Someday' },
-];
 
 export function TaskInput({ accentColor }: { accentColor: string }) {
   const [title, setTitle] = useState('');
   const [pomodoros, setPomodoros] = useState(1);
   const [priority, setPriority] = useState<Priority>('medium');
-  const [group, setGroup] = useState<TaskGroup>('today');
   const [expanded, setExpanded] = useState(false);
   const { addTask } = useTaskStore();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (!title.trim()) return;
-    addTask(title.trim(), pomodoros, priority, group);
+    addTask(title.trim(), pomodoros, priority, 'today');
     setTitle('');
     setPomodoros(1);
     setExpanded(false);
@@ -78,22 +72,6 @@ export function TaskInput({ accentColor }: { accentColor: string }) {
                 }`}
               >
                 {p.charAt(0).toUpperCase() + p.slice(1)}
-              </button>
-            ))}
-          </div>
-
-          <div className="flex gap-1">
-            {groups.map(g => (
-              <button
-                key={g.value}
-                type="button"
-                onClick={() => setGroup(g.value)}
-                className={`px-2 py-1 rounded-lg text-xs font-medium transition-all ${
-                  group === g.value ? 'text-white' : 'text-gray-500 hover:text-gray-300 bg-white/5'
-                }`}
-                style={group === g.value ? { background: accentColor } : {}}
-              >
-                {g.label}
               </button>
             ))}
           </div>

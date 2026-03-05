@@ -8,19 +8,11 @@ import {
   closestCenter,
 } from '@dnd-kit/core';
 import { arrayMove } from '@dnd-kit/sortable';
-import { Trash2, ChevronDown, ChevronRight, CalendarDays, CalendarRange, Sunset, CheckCircle2 } from 'lucide-react';
-import type { LucideIcon } from 'lucide-react';
-import { TaskGroup } from './TaskGroup';
+import { Trash2, ChevronDown, ChevronRight, CheckCircle2 } from 'lucide-react';
 import { TaskCard } from './TaskCard';
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable';
 import { ConfirmDialog } from '../ui/ConfirmDialog';
 import { useTaskStore } from '../../store/taskStore';
-
-const GROUPS: { value: 'today' | 'week' | 'someday'; label: string; Icon: LucideIcon }[] = [
-  { value: 'today', label: 'Today', Icon: CalendarDays },
-  { value: 'week', label: 'This Week', Icon: CalendarRange },
-  { value: 'someday', label: 'Someday', Icon: Sunset },
-];
 
 export function TaskList({ accentColor }: { accentColor: string }) {
   const { tasks, reorderTasks, clearCompleted } = useTaskStore();
@@ -45,16 +37,14 @@ export function TaskList({ accentColor }: { accentColor: string }) {
 
   return (
     <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-      <div className="space-y-6">
-        {GROUPS.map(group => (
-          <TaskGroup
-            key={group.value}
-            title={group.label}
-            Icon={group.Icon}
-            tasks={activeTasks.filter(t => t.group === group.value)}
-            accentColor={accentColor}
-          />
-        ))}
+      <div className="space-y-4">
+        <SortableContext items={activeTasks.map(t => t.id)} strategy={verticalListSortingStrategy}>
+          <div className="space-y-2">
+            {activeTasks.map(task => (
+              <TaskCard key={task.id} task={task} accentColor={accentColor} />
+            ))}
+          </div>
+        </SortableContext>
 
         {completedTasks.length > 0 && (
           <div className="space-y-2">

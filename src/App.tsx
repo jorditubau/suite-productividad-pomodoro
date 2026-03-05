@@ -95,7 +95,7 @@ export default function App() {
       ) : (
         /* Main dashboard — two floating cards */
         <main className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-8 pb-12 pt-4">
-          <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
+          <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl">
 
             {/* Left — Timer */}
             <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden">

@@ -93,19 +93,25 @@ export default function App() {
           <SettingsTab accentColor={accent.ring} />
         </main>
       ) : (
-        /* Main dashboard — two columns */
-        <main className="flex-1 min-h-0 flex flex-col lg:flex-row gap-0">
+        /* Main dashboard — two floating cards */
+        <main className="flex-1 min-h-0 overflow-y-auto flex items-start justify-center px-6 py-6">
+          <div className="flex flex-col lg:flex-row gap-4 w-full max-w-5xl">
 
-          {/* Left — Timer */}
-          <section className="lg:w-[420px] lg:shrink-0 min-h-0 overflow-y-auto border-b lg:border-b-0 lg:border-r border-white/5 px-5">
-            <TimerPanel />
-          </section>
+            {/* Left — Timer */}
+            <div className="lg:w-[400px] lg:shrink-0 bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+              <div className="overflow-y-auto max-h-[calc(100vh-120px)]">
+                <TimerPanel />
+              </div>
+            </div>
 
-          {/* Right — Tasks */}
-          <section className="flex-1 min-h-0 overflow-y-auto px-5 py-4">
-            <TasksTab accentColor={accent.ring} />
-          </section>
+            {/* Right — Tasks */}
+            <div className="flex-1 bg-white/[0.04] border border-white/8 rounded-2xl overflow-hidden">
+              <div className="overflow-y-auto max-h-[calc(100vh-120px)] px-5 py-4">
+                <TasksTab accentColor={accent.ring} />
+              </div>
+            </div>
 
+          </div>
         </main>
       )}
     </div>

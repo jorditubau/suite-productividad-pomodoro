@@ -18,7 +18,6 @@ const defaultAppSettings: AppSettings = {
   timerVolume: 0.7,
   ambientVolume: 0.5,
   tickSound: false,
-  notificationsEnabled: false,
 };
 
 interface SettingsState {

@@ -7,8 +7,6 @@ interface TimerState {
   secondsLeft: number;
   totalSeconds: number;
   pomodoroCount: number;
-  sessionCount: number;
-  dnMode: boolean;
   activeAmbient: string | null;
   ambientVolume: number;
   setMode: (mode: TimerMode, duration: number) => void;
@@ -16,7 +14,6 @@ interface TimerState {
   tick: () => void;
   reset: (duration: number) => void;
   incrementPomodoro: () => void;
-  setDnMode: (v: boolean) => void;
   setActiveAmbient: (v: string | null) => void;
   setAmbientVolume: (v: number) => void;
 }
@@ -27,8 +24,6 @@ export const useTimerStore = create<TimerState>((set) => ({
   secondsLeft: 25 * 60,
   totalSeconds: 25 * 60,
   pomodoroCount: 0,
-  sessionCount: 0,
-  dnMode: false,
   activeAmbient: null,
   ambientVolume: 0.5,
 
@@ -53,10 +48,8 @@ export const useTimerStore = create<TimerState>((set) => ({
 
   incrementPomodoro: () => set((state) => ({
     pomodoroCount: state.pomodoroCount + 1,
-    sessionCount: state.sessionCount + 1,
   })),
 
-  setDnMode: (v) => set({ dnMode: v }),
   setActiveAmbient: (v) => set({ activeAmbient: v }),
   setAmbientVolume: (v) => set({ ambientVolume: v }),
 }));

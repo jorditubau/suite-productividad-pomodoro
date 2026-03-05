@@ -33,7 +33,6 @@ export interface AppSettings {
   timerVolume: number;
   ambientVolume: number;
   tickSound: boolean;
-  notificationsEnabled: boolean;
 }
 
 export interface AccentColorDef {

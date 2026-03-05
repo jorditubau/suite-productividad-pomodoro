@@ -1,6 +1,7 @@
 import { useTimerStore } from '../../store/timerStore';
 import { useSettingsStore } from '../../store/settingsStore';
 import { useTimer } from '../../hooks/useTimer';
+import { useKeyboardShortcuts } from '../../hooks/useKeyboardShortcuts';
 import { TimerRing } from './TimerRing';
 import { TimerControls } from './TimerControls';
 import { ModeSelector } from './ModeSelector';
@@ -13,6 +14,8 @@ export function TimerPanel() {
   const { appSettings, timerSettings } = useSettingsStore();
   const { togglePlay, reset, skip, switchMode } = useTimer();
   const accent = getAccentColor(appSettings.accentColor);
+
+  useKeyboardShortcuts({ onPlayPause: togglePlay, onReset: reset });
   const sessionInCycle = (timer.pomodoroCount % timerSettings.longBreakInterval) + 1;
 
   return (

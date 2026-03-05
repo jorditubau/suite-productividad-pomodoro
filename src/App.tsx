@@ -1,13 +1,11 @@
-import { useState, useCallback, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Settings, ArrowLeft } from 'lucide-react';
 import { TomatoIcon } from './components/ui/TomatoIcon';
 import { TimerPanel } from './components/timer/TimerTab';
 import { TasksTab } from './components/tasks/TasksTab';
 import { SettingsTab } from './components/settings/SettingsTab';
 import { useSettingsStore } from './store/settingsStore';
-import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useTimerStore } from './store/timerStore';
-import { useTimer } from './hooks/useTimer';
 import { getAccentColor } from './utils/colors';
 
 function useTheme() {
@@ -34,19 +32,16 @@ function useTheme() {
 export default function App() {
   const [showSettings, setShowSettings] = useState(false);
   const { appSettings } = useSettingsStore();
-  const timerState = useTimerStore();
-  const { togglePlay, reset } = useTimer();
+  const { isRunning } = useTimerStore();
   const accent = getAccentColor(appSettings.accentColor);
 
   useTheme();
-
-  useKeyboardShortcuts({ onPlayPause: togglePlay, onReset: reset });
 
   return (
     <div className="h-screen bg-gray-950 text-white flex flex-col overflow-hidden">
       <div id="confetti-container" className="fixed inset-0 pointer-events-none z-[9999]" />
 
-      {/* ── Header ─────────────────────────────────────────────────────────── */}
+      {/* Header */}
       <header className="flex items-center justify-between px-5 pt-4 pb-3 shrink-0 border-b border-white/5">
         <div className="flex items-center gap-2">
           {showSettings ? (
@@ -66,7 +61,7 @@ export default function App() {
         </div>
 
         <div className="flex items-center gap-3">
-          {!showSettings && timerState.isRunning && (
+          {!showSettings && isRunning && (
             <div className="flex items-center gap-1.5 text-xs font-medium px-2.5 py-1 rounded-full bg-white/10">
               <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: accent.ring }} />
               Running
@@ -86,31 +81,24 @@ export default function App() {
         </div>
       </header>
 
-      {/* ── Main content ───────────────────────────────────────────────────── */}
+      {/* Main content */}
       {showSettings ? (
-        /* Settings — full width */
         <main className="flex-1 min-h-0 overflow-y-auto px-5 max-w-lg mx-auto w-full">
           <SettingsTab accentColor={accent.ring} />
         </main>
       ) : (
-        /* Main dashboard — two floating cards */
         <main className="flex-1 min-h-0 overflow-y-auto flex items-center justify-center px-8 pb-12 pt-4">
           <div className="flex flex-col lg:flex-row gap-6 w-full max-w-7xl">
-
-            {/* Left — Timer */}
             <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)]">
                 <TimerPanel />
               </div>
             </div>
-
-            {/* Right — Tasks */}
             <div className="flex-1 bg-white/[0.05] rounded-3xl overflow-hidden">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)] px-6 py-5">
                 <TasksTab accentColor={accent.ring} />
               </div>
             </div>
-
           </div>
         </main>
       )}

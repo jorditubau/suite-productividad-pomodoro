@@ -18,8 +18,6 @@ export function saveToStorage<T>(key: string, value: T): void {
 
 export const STORAGE_KEYS = {
   tasks: 'ff_tasks',
-  sessions: 'ff_sessions',
-  dayStats: 'ff_dayStats',
   timerSettings: 'ff_timerSettings',
   appSettings: 'ff_appSettings',
   activeTaskId: 'ff_activeTaskId',

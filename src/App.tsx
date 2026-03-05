@@ -98,14 +98,14 @@ export default function App() {
           <div className="flex flex-col lg:flex-row gap-6 w-full max-w-6xl">
 
             {/* Left — Timer */}
-            <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[3px_4px_14px_rgba(0,0,0,0.4)]">
+            <div className="lg:w-[460px] lg:shrink-0 bg-white/[0.05] rounded-3xl overflow-hidden">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)]">
                 <TimerPanel />
               </div>
             </div>
 
             {/* Right — Tasks */}
-            <div className="flex-1 bg-white/[0.05] rounded-3xl overflow-hidden shadow-[3px_4px_14px_rgba(0,0,0,0.4)]">
+            <div className="flex-1 bg-white/[0.05] rounded-3xl overflow-hidden">
               <div className="overflow-y-auto max-h-[calc(100vh-140px)] px-6 py-5">
                 <TasksTab accentColor={accent.ring} />
               </div>

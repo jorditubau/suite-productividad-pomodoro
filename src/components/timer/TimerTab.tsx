@@ -42,7 +42,7 @@ export function TimerPanel() {
 
       <CurrentTask />
 
-      <div className="w-full">
+      <div className="w-full px-4 pb-4">
         <AmbientSounds accentColor={accent.ring} />
       </div>
     </div>

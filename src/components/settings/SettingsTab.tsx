@@ -1,16 +1,12 @@
 import { useState } from 'react';
-import { Timer, Palette, Volume2, HardDrive } from 'lucide-react';
+import { Timer, Volume2 } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
 import { TimerSettings } from './TimerSettings';
-import { AppearanceSettings } from './AppearanceSettings';
 import { SoundSettings } from './SoundSettings';
-import { DataSettings } from './DataSettings';
 
 const sections: { id: string; label: string; Icon: LucideIcon }[] = [
   { id: 'timer', label: 'Timer', Icon: Timer },
-  { id: 'appearance', label: 'Looks', Icon: Palette },
   { id: 'sounds', label: 'Sounds', Icon: Volume2 },
-  { id: 'data', label: 'Data', Icon: HardDrive },
 ];
 
 export function SettingsTab({ accentColor }: { accentColor: string }) {
@@ -36,9 +32,7 @@ export function SettingsTab({ accentColor }: { accentColor: string }) {
 
       <div className="animate-fade-in">
         {section === 'timer' && <TimerSettings accentColor={accentColor} />}
-        {section === 'appearance' && <AppearanceSettings accentColor={accentColor} />}
         {section === 'sounds' && <SoundSettings accentColor={accentColor} />}
-        {section === 'data' && <DataSettings accentColor={accentColor} />}
       </div>
     </div>
   );

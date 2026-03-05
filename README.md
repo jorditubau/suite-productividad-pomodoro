@@ -1,6 +1,6 @@
 # FocusFlow — Productivity Suite
 
-A fully client-side productivity suite featuring a Pomodoro timer, task manager, and session statistics. No backend, no API keys required — all data persists in `localStorage`.
+A fully client-side productivity suite featuring a Pomodoro timer and task manager. No backend, no API keys required — all data persists in `localStorage`.
 
 ## Features
 
@@ -9,35 +9,23 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 - Three modes: Focus (25 min), Short Break (5 min), Long Break (15 min)
 - Auto-switch between modes after each session
 - Long break every 4 focus sessions (configurable)
-- Do Not Disturb fullscreen mode
 - Browser tab title updates live with remaining time
 - Desktop notifications on session end
+- Ambient sound generator (Rain, Café, Forest, Ocean) via Web Audio API
 
 ### Task Manager
-- Add tasks with estimated pomodoros, priority (Low/Medium/High), and group
+- Add tasks with estimated pomodoros and priority (Low/Medium/High)
 - Drag-and-drop reorder with `@dnd-kit`
-- Task groups: Today, This Week, Someday
 - Link a task to the active timer session
-- Confetti animation on task completion 
+- Confetti animation on task completion
 - Completed tasks section with clear option
-
-### Statistics Dashboard
-- Daily overview: focus time, pomodoros, streak, tasks completed
-- Bar chart: pomodoros per day (last 7 days)
-- Line chart: focus hours per day (last 4 weeks)
-- Pie chart: time distribution per task (top 5)
-- GitHub-style activity heatmap (last 3 months)
-- Session log with timestamps
 
 ### Settings
 - Timer duration sliders (Focus / Short Break / Long Break)
 - Auto-start breaks & focus toggles
-- Theme: Dark / Light / System
-- 5 accent color presets: Tomato Red, Ocean Blue, Forest Green, Purple, Amber
 - Timer sound selector: Chime, Bell, Digital, None
-- Ambient sound generator (Rain, Café, Forest, Ocean) via Web Audio API
-- Export / Import data as JSON
-- Reset all data
+- Timer volume control
+- Tick sound toggle
 
 ## Keyboard Shortcuts
 
@@ -45,8 +33,6 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 |-----|--------|
 | `Space` | Play / Pause timer |
 | `R` | Reset timer |
-| `T` | Go to Tasks tab |
-| `S` | Go to Stats tab |
 
 ## Tech Stack
 
@@ -57,7 +43,6 @@ A fully client-side productivity suite featuring a Pomodoro timer, task manager,
 | Tailwind CSS | Styling |
 | Zustand | Global state (persisted to localStorage) |
 | @dnd-kit | Drag & drop task reordering |
-| Recharts | Statistics charts |
 | Lucide React | Icons |
 | Web Audio API | Timer sounds & ambient noise generation |
 
@@ -75,4 +60,3 @@ npm run build
 ```
 
 Open: http://127.0.0.1:5174
-
